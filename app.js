@@ -7,6 +7,7 @@ function generateRandomOrder(array) {
   }
   return array;
 }
+
 function generateRandomDie() {
   var randomNumber = Math.floor(Math.random() * 6) + 1;
   return randomNumber;
@@ -94,7 +95,7 @@ var roundPlayer,
   round = 0,
   boardCells = 40,
   maxRound = 20 * players.length;
-startButton = document.getElementById('button-start'),
+  startButton = document.getElementById('button-start'),
   rollButton = document.getElementById('button-roll'),
   roundCounter = document.getElementById('round-counter'),
   currentPlayer = document.getElementById('current-player'),
