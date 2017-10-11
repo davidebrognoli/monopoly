@@ -107,7 +107,7 @@ class Monopoly {
     const playerEl = document.getElementById(currentPlayer.id);
     const newCell = document.getElementById('monopoly-cell-' + currentPlayer.position);
     const turn = this.turn + 1;
-    this.writeLog(`Turno ${turn} - ${currentPlayer.name} rolled dice and got ${diceSum}. This brings him to cell ${currentPlayer.position}`);
+    this.writeLog(`Move ${turn} - ${currentPlayer.name} rolled dice and got ${diceSum}. This brings him to cell ${currentPlayer.position}`);
     newCell.appendChild(playerEl);
   }
 
