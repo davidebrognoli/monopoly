@@ -1,120 +1,148 @@
-function generateRandomOrder(array) {
-  for (var i = array.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
-  return array;
-}
+const boardCells = 40;
+const maxRound = 20;
+const totalPlayers = 4;
 
-function generateRandomDie() {
-  var randomNumber = Math.floor(Math.random() * 6) + 1;
-  return randomNumber;
-}
+let monopoly = null;
 
-function rollDice() {
-  var firstDie = generateRandomDie(),
-    secondDie = generateRandomDie();
-  return firstDie + secondDie;
-}
-
-function writeLog(message) {
-  var now = new Date;
-  var msg = now.toLocaleString() + ' - ' + message + "\r";
-  logArea.prepend(msg);
-}
-
-function movePlayer(diceSum) {
-  var nextPosition;
-  roundCounter.innerText = Math.ceil((round + 1) / players.length);
-  var playerEl = document.getElementById(roundPlayer.id);
-  nextPosition = (roundPlayer.position + diceSum) % boardCells;
-  nextPosition = nextPosition === 0 ? 40 : nextPosition;
-  roundPlayer.position = nextPosition;
-  var newCell = document.getElementById('monopoly-cell-' + roundPlayer.position);
-  writeLog(roundPlayer.name + ' rolled dice and got ' + diceSum + '. This brings him to cell ' + roundPlayer.position);
-  newCell.appendChild(playerEl);
-}
-
-function updateRoundInfo() {
-  var playerIndex;
-
-  round = round + 1;
-  if (round < maxRound) {
-    playerIndex = round % players.length;
-    roundPlayer = players[playerIndex]
-    currentPlayer.innerText = roundPlayer.name;
-  } else {
-    rollButton.style.display = 'none';
-    currentPlayer.innerText = 'END OF GAME';
-    writeLog('End of game');
+class Player {
+  constructor({ id }) {
+    this.id = 'player-' + id;
+    this.name = 'Player ' + id;
+    this.position = 1;
   }
 }
 
-function runGame() {
-  diceSum = rollDice();
-  movePlayer(diceSum);
-  updateRoundInfo();
+class Monopoly {
+  constructor({ boardCells, maxRound, totalPlayers }) {
+    this.boardCells = boardCells;
+    this.maxRound = maxRound;
+    this.totalPlayers = totalPlayers;
+    this.currentPlayer = null;
+    this.turn = 0;
+  }
+
+  init() {
+    this.players = [];
+    for (let i = 0; i < this.totalPlayers; i++) {
+      let player = new Player({ id: i + 1 });
+      this.players.push(player);
+    }
+    this.players = this.randomOrderPlayers(this.players);
+    this.currentPlayer = this.players[0];
+    this.writeLog('Start Game');
+    this.showPlayersOrder();
+    this.showCurrentPlayer();
+    this.showRollButton();
+    this.showCurrentTurn(1);
+  }
+
+  randomOrderPlayers(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  showPlayersOrder() {
+    const playersOrder = document.getElementById('players-order');
+    playersOrder.innerText = this.players.map(p => p.name).join(', ');
+  }
+
+  showCurrentPlayer() {
+    const currentPlayer = document.getElementById('current-player');
+    const roundPlayer = this.currentPlayer;
+    const msg = roundPlayer ? roundPlayer.name : '';
+    currentPlayer.innerText = msg;
+  }
+
+  showCurrentTurn(turn = null) {
+    turn = turn ? turn : this.turn;
+    let currentTurn = Math.ceil((turn + 1) / this.totalPlayers);
+    currentTurn = currentTurn < maxRound ? currentTurn : maxRound;
+    const roundCounter = document.getElementById('round-counter');
+    roundCounter.innerText = currentTurn;
+  }
+
+  showRollButton() {
+    startButton.style.display = 'none';
+    rollButton.style.display = 'block';
+  }
+
+  incrementTurn() {
+    this.turn = this.turn + 1;
+    const maxTurns = this.maxRound * this.totalPlayers;
+    if (this.turn < maxTurns) {
+      const playerIndex = this.turn % this.totalPlayers;
+      this.currentPlayer = this.players[playerIndex];
+      this.showCurrentPlayer();
+    } else {
+      this.currentPlayer = null;
+      this.showCurrentPlayer();
+      rollButton.style.display = 'none';
+      this.writeLog('End of Game');
+    }
+  }
+
+  generateRandomDie() {
+    const randomNumber = Math.floor(Math.random() * 6) + 1;
+    return randomNumber;
+  }
+
+  rollDice() {
+    const firstDie = this.generateRandomDie(),
+      secondDie = this.generateRandomDie();
+    return firstDie + secondDie;
+  }
+
+  movePlayer(diceSum) {
+    const currentPlayer = this.currentPlayer;
+    let nextPosition = (currentPlayer.position + diceSum) % boardCells;
+    nextPosition = nextPosition === 0 ? boardCells : nextPosition;
+    currentPlayer.position = nextPosition;
+  }
+
+  moveDomPlayer(diceSum) {
+    const currentPlayer = this.currentPlayer;
+    const playerEl = document.getElementById(currentPlayer.id);
+    const newCell = document.getElementById('monopoly-cell-' + currentPlayer.position);
+    const turn = this.turn + 1;
+    this.writeLog(`Turno ${turn} - ${currentPlayer.name} rolled dice and got ${diceSum}. This brings him to cell ${currentPlayer.position}`);
+    newCell.appendChild(playerEl);
+  }
+
+  runGame() {
+    this.showCurrentTurn(this.turn + 1);
+    const diceSum = this.rollDice();
+    this.movePlayer(diceSum);
+    this.moveDomPlayer(diceSum);
+    this.incrementTurn();
+  }
+
+  writeLog(message) {
+    const now = new Date;
+    const cr = "\r\n";
+    const msg = `${now.toLocaleString()} - ${message}${cr}`;
+    const logArea = document.getElementById('monopoly-log');
+    logArea.prepend(msg);
+  }
 }
 
-function showPlayers() {
-  var player,
-    playerNames = [];
-
-  for (var i = 0; i < players.length; i++) {
-    player = players[i];
-    playerNames.push(player.name);
-  }
-  playersOrder.innerText = playerNames.join(', ');
-}
-
-var players = [
-  {
-    id: 'player-1',
-    name: 'Player 1',
-    position: 1
-  },
-  {
-    id: 'player-2',
-    name: 'Player 2',
-    position: 1
-  },
-  {
-    id: 'player-3',
-    name: 'Player 3',
-    position: 1
-  },
-  {
-    id: 'player-4',
-    name: 'Player 4',
-    position: 1
-  }
-];
-var roundPlayer,
-  round = 0,
-  boardCells = 40,
-  maxRound = 20 * players.length;
-  startButton = document.getElementById('button-start'),
-  rollButton = document.getElementById('button-roll'),
-  roundCounter = document.getElementById('round-counter'),
-  currentPlayer = document.getElementById('current-player'),
-  playersOrder = document.getElementById('players-order'),
-  logArea = document.getElementById('monopoly-log');
-
-
+const startButton = document.getElementById('button-start');
 startButton.addEventListener('click', function (evt) {
-  evt.preventDefault();
-  writeLog('Start Game');
-  players = generateRandomOrder(players);
-  showPlayers();
-  startButton.style.display = 'none';
-  roundPlayer = players[0]
-  currentPlayer.innerText = roundPlayer.name;
-  rollButton.style.display = 'block';
+  if (!monopoly) {
+    monopoly = new Monopoly({ boardCells, maxRound, totalPlayers });
+    monopoly.init();
+  } else {
+    console.log('Monopoly already started');
+  }
 }, false);
 
+const rollButton = document.getElementById('button-roll');
 rollButton.addEventListener('click', function (evt) {
-  evt.preventDefault();
-  runGame();
+  if (monopoly) {
+    monopoly.runGame();
+  } else {
+    console.log('Monopoly not started yet');
+  }
 }, false);
