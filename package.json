@@ -1,0 +1,16 @@
+{
+  "name": "monopoly_kata",
+  "version": "1.0.0",
+  "description": "A simple implementation of Monopoly Game",
+  "main": "app.js",
+  "repository": "git@github.com:davidebrognoli/monopoly.git",
+  "author": "Davide Brognoli <davide.brognoli@gmail.com>",
+  "license": "ISC",
+  "scripts": {
+    "test": "mocha ./test/**/*.js"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1"
+  }
+}
