@@ -1,33 +1,30 @@
 class Monopoly {
-    constructor({ 
+      constructor({ 
       boardCells, 
       maxRound, 
-      totalPlayers,
-      playersOrderID = 'players-order',
-      currentPlayerID = 'current-player',
-      logAreaID = 'monopoly-log',
-      roundCounterID = 'round-counter',
+      totalPlayers
     }) {
       this.boardCells = boardCells;
       this.maxRound = maxRound;
       this.totalPlayers = totalPlayers;
-      this.currentPlayer = null;
       this.turn = 0;
-      this.currentPlayerID = currentPlayerID;
-      this.logAreaID = logAreaID;
-      this.playersOrderID = playersOrderID;
-      this.roundCounterID = roundCounterID;
+      this.currentPlayer = null;
       this.currentPlayerEl = null;
       this.logArea = null;
       this.playersOrder = null;
       this.roundCounter = null; 
     }
   
-    init() {
-      this.currentPlayerEl = document.getElementById(this.currentPlayerID);
-      this.logArea = document.getElementById(this.logAreaID);
-      this.playersOrder = document.getElementById(this.playersOrderID);
-      this.roundCounter = document.getElementById(this.roundCounterID); 
+    init(
+      playersOrderID = 'players-order',
+      currentPlayerID = 'current-player',
+      logAreaID = 'monopoly-log',
+      roundCounterID = 'round-counter'
+    ) {
+      this.currentPlayerEl = document.getElementById(currentPlayerID);
+      this.logArea = document.getElementById(logAreaID);
+      this.playersOrder = document.getElementById(playersOrderID);
+      this.roundCounter = document.getElementById(roundCounterID); 
       this.players = [];
       for (let i = 0; i < this.totalPlayers; i++) {
         let player = new Player({ id: i + 1 });
