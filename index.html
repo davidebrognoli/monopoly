@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Monopoly</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="monopoly-board">
+    <div class="monopoly-controller">
+      <p>Turn:
+        <span id="round-counter">0</span>/20</p>
+      <p>Current Player:
+        <span id="current-player"></span>
+      </p>
+      <p>Players Order:
+        <span id="players-order"></span>
+      </p>
+      <div class="monopoly-log-container">
+        <label>Log: </label>
+        <textarea id="monopoly-log" readonly></textarea>
+      </div>
+      <button id="button-roll">Roll Dice</button>
+      <button id="button-start">Start Game</button>
+      <h1>Monopoly</h1>
+    </div>
+    <div class="monopoly-cells monopoly-cells-bottom">
+      <div class="monopoly-cell" id="monopoly-cell-1">
+        <span>1</span>
+        <div class="player" id="player-1">1</div>
+        <div class="player" id="player-2">2</div>
+        <div class="player" id="player-3">3</div>
+        <div class="player" id="player-4">4</div>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-2">
+        <span>2</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-3">
+        <span>3</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-4">
+        <span>4</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-5">
+        <span>5</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-6">
+        <span>6</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-7">
+        <span>7</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-8">
+        <span>8</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-9">
+        <span>9</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-10">
+        <span>10</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-11">
+        <span>11</span>
+      </div>
+    </div>
+    <div class="monopoly-cells monopoly-cells-left">
+      <div class="monopoly-cell" id="monopoly-cell-12">
+        <span>12</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-13">
+        <span>13</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-14">
+        <span>14</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-15">
+        <span>15</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-16">
+        <span>16</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-17">
+        <span>17</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-18">
+        <span>18</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-19">
+        <span>19</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-20">
+        <span>20</span>
+      </div>
+    </div>
+    <div class="monopoly-cells monopoly-cells-top">
+      <div class="monopoly-cell" id="monopoly-cell-21">
+        <span>21</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-22">
+        <span>22</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-23">
+        <span>23</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-24">
+        <span>24</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-25">
+        <span>25</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-26">
+        <span>26</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-27">
+        <span>27</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-28">
+        <span>28</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-29">
+        <span>29</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-30">
+        <span>30</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-31">
+        <span>31</span>
+      </div>
+    </div>
+    <div class="monopoly-cells monopoly-cells-right">
+      <div class="monopoly-cell" id="monopoly-cell-32">
+        <span>32</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-33">
+        <span>33</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-34">
+        <span>34</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-35">
+        <span>35</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-36">
+        <span>36</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-37">
+        <span>37</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-38">
+        <span>38</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-39">
+        <span>39</span>
+      </div>
+      <div class="monopoly-cell" id="monopoly-cell-40">
+        <span>40</span>
+      </div>
+    </div>
+  </div>
+  <script src="player.js"></script>
+  <script src="monopoly.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
