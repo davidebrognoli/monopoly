@@ -10,13 +10,13 @@ describe('Monopoly', function () {
 
   it('should reorder an array', function(){
     let monopoly = new Monopoly(monopolyStartParams);
-    const reorderedArray = monopoly.randomOrderPlayers([1,2,3,4]);
+    const reorderedArray = monopoly._randomOrderPlayers([1,2,3,4]);
     assert.notDeepEqual([1,2,3,4], reorderedArray);
   })
 
   it('should return an integer between 2 an 12', function(){
     let monopoly = new Monopoly(monopolyStartParams);
-    const diceSum = monopoly.rollDice();
+    const diceSum = monopoly._rollDice();
     assert.isBelow(diceSum, 13);
     assert.isBelow(1, diceSum);
   })
