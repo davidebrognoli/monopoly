@@ -9,15 +9,21 @@ startButton.addEventListener('click', function (evt) {
   if (!monopoly) {
     monopoly = new Monopoly({ boardCells, maxRound, totalPlayers });
     monopoly.init();
+    startButton.style.display = 'none';
+    rollButton.style.display = 'block';
   } else {
     console.log('Monopoly already started');
   }
 }, false);
 
+let gameEnded;
 const rollButton = document.getElementById('button-roll');
 rollButton.addEventListener('click', function (evt) {
   if (monopoly) {
-    monopoly.runGame();
+    gameEnded = monopoly.runGame();
+    if(gameEnded){
+      rollButton.style.display = 'none';
+    }
   } else {
     console.log('Monopoly not started yet');
   }
